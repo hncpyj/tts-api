@@ -4,7 +4,8 @@ from pydub import AudioSegment
 import uuid
 
 app = Flask(__name__)
-tts = TTS(model_name="tts_models/en/vctk/vits", progress_bar=False)
+# tts = TTS(model_name="tts_models/en/vctk/vits", progress_bar=False)
+tts = TTS(model_name="tts_models/en/vctk/vits", progress_bar=False).to("cpu")
 
 @app.route("/tts", methods=["POST"])
 def tts_endpoint():
