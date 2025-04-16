@@ -1,0 +1,30 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg
+*.egg-info/
+dist/
+build/
+
+# venv (가상환경)
+.venv/
+env/
+venv/
+
+# macOS
+.DS_Store
+
+# Audio files (렌더할 때 자동 생성되므로 커밋할 필요 없음)
+*.wav
+
+# VSCode settings
+.vscode/
+
+# Logs or temp
+*.log
+*.tmp
+*.cache
+
+# model cache (Coqui TTS 모델들)
+~/.local/share/tts/
+~/.cache/
