@@ -1,33 +1,24 @@
 from flask import Flask, request, send_file
 from TTS.api import TTS
-from pydub import AudioSegment
-import uuid
+import os
 
 app = Flask(__name__)
-# tts = TTS(model_name="tts_models/en/vctk/vits", progress_bar=False)
-tts = TTS(model_name="tts_models/en/vctk/vits", progress_bar=False).to("cpu")
+
+# 모델 불러오기 (Render에서 실행 가능)
+tts = TTS(model_name="tts_models/en/ljspeech/tacotron2-DDC", progress_bar=False).to("cpu")
 
 @app.route("/tts", methods=["POST"])
 def tts_endpoint():
     data = request.get_json()
     text = data.get("text", "")
-    speaker = data.get("speaker", "p261")  # 기본값: 남성 화자
-    speed = data.get("speed", 1.25)        # 기본값: 1.25배속
+    output_path = data.get("output_path", "output.wav")  # 파일명 외부에서 받음
 
-    file_id = str(uuid.uuid4())
-    original_path = f"original_{file_id}.wav"
-    speedup_path = f"output_{file_id}.wav"
+    # TTS 생성 (단일 화자, 속도 조절 없음)
+    tts.tts_to_file(text=text, file_path=output_path)
 
-    # TTS 생성 (원본 저장)
-    tts.tts_to_file(text=text, speaker=speaker, file_path=original_path)
-
-    # 속도 조절하여 새로운 파일 생성
-    sound = AudioSegment.from_wav(original_path)
-    faster = sound.speedup(playback_speed=speed)
-    faster.export(speedup_path, format="wav")
-
-    # 속도 조절된 버전 리턴
-    return send_file(speedup_path, mimetype="audio/wav")
+    return send_file(output_path, mimetype="audio/wav")
 
 if __name__ == "__main__":
-    app.run(debug=True, port=5000)
+    # Render 호환 포트
+    port = int(os.environ.get("PORT", 5000))
+    app.run(debug=False, host="0.0.0.0", port=port)

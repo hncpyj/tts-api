@@ -1,9 +1,12 @@
 services:
   - type: web
     name: tts-api
-    env: python
+    runtime: python
     buildCommand: pip install -r requirements.txt
-    startCommand: python app.py
+    startCommand: gunicorn app:app
     plan: free
     region: oregon
     branch: main
+    envVars:
+      - key: PYTHONUNBUFFERED
+        value: "1"
