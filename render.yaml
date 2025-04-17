@@ -3,10 +3,9 @@ services:
     name: tts-api
     runtime: python
     buildCommand: pip install -r requirements.txt
-    startCommand: gunicorn wsgi:app
+    startCommand: python app.py
     plan: free
     region: oregon
-    branch: main
     envVars:
       - key: PYTHONUNBUFFERED
         value: "1"
