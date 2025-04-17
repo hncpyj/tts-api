@@ -10,7 +10,5 @@ def tts_endpoint():
     data = request.get_json()
     text = data.get("text", "")
     output_path = data.get("output_path", "output.wav")
-
-    os.makedirs(os.path.dirname(output_path), exist_ok=True)
     tts.tts_to_file(text=text, file_path=output_path)
     return send_file(output_path, mimetype="audio/wav")
