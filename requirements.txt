@@ -1,8 +1,4 @@
-# 기존 torch 대신 CPU 전용으로 고정
-torch==2.1.2+cpu
-torchaudio==2.1.2+cpu
--f https://download.pytorch.org/whl/torch_stable.html
-
 TTS==0.22.0
 Flask==3.0.2
 gunicorn
+torch==2.1.2

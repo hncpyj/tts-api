@@ -28,6 +28,3 @@ venv/
 # model cache (Coqui TTS 모델들)
 ~/.local/share/tts/
 ~/.cache/
-
-# (Optional) render config - optional if not versioning infra
-render.yaml
